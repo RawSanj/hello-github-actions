@@ -22,3 +22,9 @@ jobs:
         java-version: 11
     - name: Print Maven Version
       run: mvn -version
+    - name: Login to Heroku and see Apps
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku apps
+    - name: Print Files
+      run: ls -l
