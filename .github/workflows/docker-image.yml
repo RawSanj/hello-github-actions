@@ -24,7 +24,7 @@ jobs:
       id: vars
       shell: bash
       run: |
-        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        echo "::set-output name=sha_short::$(git rev-parse --short "$GITHUB_SHA")"
         
     - name: Create Pre-Release
       id: create_pre_release
