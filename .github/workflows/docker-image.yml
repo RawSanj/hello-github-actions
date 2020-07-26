@@ -13,12 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
+#     - uses: actions/checkout@v2
+#     - name: Build the Docker image
+#       run: |
+#         cd action-a && docker build . --file Dockerfile --tag hello-docker:$(date +%s)
+#         echo ${{ github.ref }}
+#         echo git rev-parse --short HEAD
+
+    - name: Create Release Name
+      id: vars
+      shell: bash
       run: |
-        cd action-a && docker build . --file Dockerfile --tag hello-docker:$(date +%s)
-        echo ${{ github.ref }}
-        echo git rev-parse --short HEAD
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
         
     - name: Create Pre-Release
       id: create_pre_release
@@ -26,8 +32,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: $(git rev-parse --short "$GITHUB_SHA")
-        release_name: Release 0.0.1-$(git rev-parse --short "$GITHUB_SHA")
+        tag_name: ${{ steps.vars.outputs.sha_short }}
+        release_name: Release 0.0.1-${{ steps.vars.outputs.sha_short }}
         body: |
           Alpha Release for testing only
         draft: false
