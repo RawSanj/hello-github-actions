@@ -43,5 +43,6 @@ jobs:
         release_name: Release 0.0.1-${{ steps.vars.outputs.sha_short }}
         body: |
           Alpha Release for testing only
+          Changes: ${{ github.event.head_commit.message }}
         draft: false
         prerelease: true    
