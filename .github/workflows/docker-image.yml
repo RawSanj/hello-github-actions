@@ -20,11 +20,16 @@ jobs:
 #         echo ${{ github.ref }}
 #         echo git rev-parse --short HEAD
 
+    - name : GITHUB CONTEXT
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
     - name: Create Release Name
       id: vars
       shell: bash
       run: |
-        echo $GITHUB_SHA
+        echo ${{ github.event.head_commit.message }}
         GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-8)
         echo "::set-output name=sha_short::$GITHUB_SHA_SHORT"
         
