@@ -15,4 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: cd action-a && docker build . --file Dockerfile --tag hello-docker:$(date +%s)
+      run: |
+        cd action-a && docker build . --file Dockerfile --tag hello-docker:$(date +%s)
+        echo ${{ github.ref }}
